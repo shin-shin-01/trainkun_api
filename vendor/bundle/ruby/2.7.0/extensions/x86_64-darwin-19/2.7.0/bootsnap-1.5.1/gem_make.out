@@ -1,0 +1,15 @@
+current directory: /Users/kaze/Documents/LINE/trainkun_api/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.5.1/ext/bootsnap
+/Users/kaze/work/dotfiles/.anyenv/envs/rbenv/versions/2.7.2/bin/ruby -I /Users/kaze/work/dotfiles/.anyenv/envs/rbenv/versions/2.7.2/lib/ruby/2.7.0 -r ./siteconf20201220-14725-6nx0v4.rb extconf.rb
+creating Makefile
+
+current directory: /Users/kaze/Documents/LINE/trainkun_api/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.5.1/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/kaze/Documents/LINE/trainkun_api/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.5.1/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/kaze/Documents/LINE/trainkun_api/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.5.1/ext/bootsnap
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20201220-14725-17o9f9t/bootsnap
