@@ -1,11 +1,8 @@
 name: Model and Controller test
-
 on: [pull_request]
-
 jobs:
   test:
-    runs_on: ubuntu-latest
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -23,12 +20,23 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client libmysqlclient-dev
-      
+
       # mysql.server start & create datebase
       - name: startServer and createDatabase
         env:
           MYSQL_USER: root
-          MYSQL_ROOT_PASWORD: root
+          MYSQL_ROOT_PASSWORD: root
+          RAILS_ENV: github_action
+        run: |
+          sudo systemctl start mysql.service
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      # テストの実行
+      - name: Run rspec
+        env:
+          MYSQL_USER: root
+          MYSQL_ROOT_PASSWORD: root
           RAILS_ENV: github_action
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bin/bundle exec rspec --require rails_helper
