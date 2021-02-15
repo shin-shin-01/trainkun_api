@@ -24,8 +24,8 @@ jobs:
       # mysql.server start & create datebase
       - name: startServer and createDatabase
         env:
-          MYSQL_USER: root
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_USERNAME: root
+          MYSQL_PASSWORD: root
           RAILS_ENV: github_action
         run: |
           sudo systemctl start mysql.service
