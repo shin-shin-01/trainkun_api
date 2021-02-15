@@ -57,7 +57,7 @@ github_action:
 #
 production:
   <<: *default
-  database: dxlab_dummypoint_apiserver_production
+  database: <%= ENV['MYSQL_DATABASENAME'] %>
   username: <%= ENV['MYSQL_USERNAME'] %>
   password: <%= ENV['MYSQL_PASSWORD'] %>
   host: <%= ENV['MYSQL_HOST'] %>
