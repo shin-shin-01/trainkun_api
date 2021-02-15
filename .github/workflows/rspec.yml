@@ -1,0 +1,34 @@
+name: Model and Controller test
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs_on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # ruby install
+      - name: SetUp Ruby 2.7
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
+          # automatically cache `bundle install` and `gem
+          bundler-cache: true
+      
+      # MySQL client install
+      - name: Install MySQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client libmysqlclient-dev
+      
+      # mysql.server start & create datebase
+      - name: startServer and createDatabase
+        env:
+          MYSQL_USER: root
+          MYSQL_ROOT_PASWORD: root
+          RAILS_ENV: github_action
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: bin/bundle exec rspec --require rails_helper
