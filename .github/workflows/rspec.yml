@@ -39,4 +39,4 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           RAILS_ENV: github_action
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: bin/bundle exec rspec --require rails_helper
+        run: bundle exec rspec --require rails_helper
