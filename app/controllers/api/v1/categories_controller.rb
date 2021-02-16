@@ -14,6 +14,11 @@ module Api
         end
       end
 
+      # GET /categories
+      def index
+        render json: { data: Caterogy.all }, status: :ok
+      end
+
       private
 
       def category_params
