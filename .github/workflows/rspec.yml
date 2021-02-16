@@ -36,7 +36,7 @@ jobs:
       - name: Run rspec
         env:
           MYSQL_USER: root
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_PASSWORD: root
           RAILS_ENV: github_action
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rspec --require rails_helper
