@@ -33,4 +33,27 @@ RSpec.describe 'Categories', type: :request do
       it_behaves_like 'response status code: BAD REQUEST'
     end
   end
+
+  describe 'GET /categories' do
+    let(:endpoint) { '/api/v1/categories' }
+
+    let!(:first_category) { create(:category) }
+    let!(:second_category) { create(:category) }
+
+    context 'SUCCESS' do
+      before { get endpoint }
+
+      it_behaves_like 'API returns json'
+      it_behaves_like 'response status code: OK'
+      it 'returns two category' do
+        expect(json['categories'].size).to eq 2
+
+        expect(json['categories'][0]['id']).to eq first_category.id
+        expect(json['categories'][0]['name']).to eq first_category.name
+
+        expect(json['categories'][1]['id']).to eq second_category.id
+        expect(json['categories'][1]['name']).to eq second_category.name
+      end
+    end
+  end
 end
