@@ -8,7 +8,7 @@ module Api
         new_category = Category.new(category_params)
 
         if new_category.save
-          render json: { data: new_category }, status: :created
+          render json: { data: CategorySerializer.new(new_category) }, status: :created
         else
           render json: { error: 'Failed to create new Category', data: new_category.errors }, status: :bad_request
         end
@@ -16,7 +16,7 @@ module Api
 
       # GET /categories
       def index
-        render json: { data: Caterogy.all }, status: :ok
+        render json: Category.all, each_serializer: CategorySerializer
       end
 
       private
