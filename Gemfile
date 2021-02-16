@@ -38,9 +38,9 @@ group :development, :test, :github_action do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # # Test Framework
-  # gem 'factory_bot_rails'
-  # gem 'rspec-rails', '~> 4.0.1'
-  # gem 'shoulda-matchers', '~> 4.0'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
   # Linter for Ruby & Rails
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false

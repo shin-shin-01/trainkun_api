@@ -15,7 +15,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gem-${{ hachFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gem-
       - name: Install bundler & bundle Install
@@ -25,5 +25,5 @@ jobs:
           bundle install --jobs 4 --retry 3 --clean
       - name: Run rubocop with reviewdog
         env:
-          REVIEWDOG_GITHUB_API_TOKEN: $$ {{ secrets.GITHUB_TOKEN }}
-        run: bundle exec rubocop | reviewdog -reporter-github-pr-review -f=rubocop
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bundle exec rubocop | reviewdog -reporter=github-pr-review -f=rubocop
