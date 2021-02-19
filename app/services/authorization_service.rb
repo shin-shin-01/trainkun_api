@@ -7,7 +7,7 @@ class AuthorizationService
   end
 
   def extract_access_token(headers)
-    return headers['LINE_Authorization'] if headers['LINE_Authorization'].present?
+    return headers['LINEAuthorization'] if headers['LINEAuthorization'].present?
     return ""
   end
 
@@ -15,14 +15,10 @@ class AuthorizationService
     require "net/http"
 
     uri = URI.parse(@request_url)
-    response = Net::HTTP.get_response(uri)
-
-    # check: statsuCode
-    return false if response.code != 200
+    response = Net::HTTP.get(uri)
 
     # check: clientId
-    return false if response.body.client_id != @client_id
-
+    return false if response['client_id'] != @client_id
     true
   end
 end
