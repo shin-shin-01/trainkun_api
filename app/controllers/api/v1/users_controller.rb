@@ -7,19 +7,18 @@ module Api
       # return Userinfo
       def create
         new_user = User.new(user_params)
+        user = User.find_by(uid: user_params[:uid])
 
         if new_user.save
           render json: { user: UserSerializer.new(new_user) }, status: :created
-        else
-          render json: { user: UserSerializer.new(set_user) }, status: :created
+        elsif user # 既に作成されている場合
+          render json: { user: UserSerializer.new(user) }, status: :ok
+        else # パラメータでエラーが発生した場合
+          render json: { erorr: 'Faild to create new user', data: new_user.errors }, status: :bad_request
         end
       end
 
       private
-
-      def set_user
-        return User.find_by(uid: user_params[:uid])
-      end
 
       def user_params
         params.require(:user).permit(:name, :uid)
