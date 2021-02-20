@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Categories', type: :request do
+  before { skip_token_authorization }
+
   describe 'POST /categories' do
     let(:headers) { { ACCEPT: 'application/json' } }
     let(:endpoint) { '/api/v1/categories' }
