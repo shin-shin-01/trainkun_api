@@ -16,9 +16,10 @@ class AuthorizationService
 
     uri = URI.parse(@request_url)
     response = Net::HTTP.get(uri)
+    json_response = JSON.parse(response)
 
     # check: clientId
-    return false if response['client_id'] != @client_id
+    return false if json_response['client_id'] != @client_id
     true
   end
 end
