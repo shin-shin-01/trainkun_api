@@ -39,4 +39,5 @@ jobs:
           MYSQL_PASSWORD: root
           RAILS_ENV: github_action
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          AUTHORIZATION_URL: ${{ secrets.AUTHORIZATION_URL }}
         run: bundle exec rspec --require rails_helper
