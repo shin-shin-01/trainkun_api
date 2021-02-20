@@ -8,7 +8,8 @@ class AuthorizationService
 
   def extract_access_token(headers)
     return headers['LINEAuthorization'] if headers['LINEAuthorization'].present?
-    return ""
+
+    ""
   end
 
   def verify_token
@@ -20,6 +21,7 @@ class AuthorizationService
 
     # check: clientId
     return false if json_response['client_id'] != @client_id
+
     true
   end
 end
