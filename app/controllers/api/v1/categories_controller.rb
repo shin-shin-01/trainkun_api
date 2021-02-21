@@ -16,7 +16,7 @@ module Api
 
       # GET /categories
       def index
-        render json: Category.all, each_serializer: CategorySerializer
+        render json: Category.all, each_serializer: CategorySerializer, root: 'data'
       end
 
       private
