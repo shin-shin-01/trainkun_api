@@ -15,5 +15,5 @@ class Wish < ApplicationRecord
   }
   validates :status, presence: true
 
-  validates :deleted, inclusion: { in: [true, false] }, presence: true
+  validates :deleted, inclusion: { in: [true, false] }
 end

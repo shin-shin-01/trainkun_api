@@ -22,10 +22,4 @@ RSpec.describe Wish, type: :model do
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to define_enum_for(:status).with_values(%i[wish bougth]) }
   end
-
-  describe 'validate: deleted' do
-    it { is_expected.to validate_presence_of(:deleted) }
-    # boolean columns will automatically convert non-boolean values to boolean ones
-    # it { is_expected.to validate_inclusion_of(:deleted).in_array([true, false]) }
-  end
 end
