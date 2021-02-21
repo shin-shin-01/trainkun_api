@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      # User
+      resources :users, param: :uid, only: [:create], controller: 'users'
       # Category
       resources :categories, only: [:index, :create], controller: 'categories'
     end
