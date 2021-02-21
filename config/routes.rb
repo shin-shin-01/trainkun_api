@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # User
-      resources :users, param: :uid, only: [:create], controller: 'users'
+      resources :users, param: :uid, only: [:create], controller: 'users' do
+        member do #users/:uid
+          resources :wishes, only: [:index, :create], controller: 'users/wishes'
+        end
+      end
       # Category
       resources :categories, only: [:index, :create], controller: 'categories'
     end
