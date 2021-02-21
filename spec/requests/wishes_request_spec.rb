@@ -49,10 +49,11 @@ RSpec.describe 'Wishes', type: :request do
         )
       end
     end
+
     context 'SUCCESS: #index users wishes (no wish)' do
       let(:unused_category) { create(:category) }
       let(:request) { get "/api/v1/users/#{user.uid}/wishes?category_id=#{unused_category.id}" }
- 
+
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: OK'
       it 'returns: no wishes' do
