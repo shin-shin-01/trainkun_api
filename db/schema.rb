@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_20_222210) do
+ActiveRecord::Schema.define(version: 2021_02_21_021418) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -26,4 +26,19 @@ ActiveRecord::Schema.define(version: 2021_02_20_222210) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  create_table "wishes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "category_id", null: false
+    t.string "name", null: false
+    t.integer "star", null: false
+    t.integer "status", default: 0, null: false, comment: "default: wish"
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_wishes_on_category_id"
+    t.index ["user_id"], name: "index_wishes_on_user_id"
+  end
+
+  add_foreign_key "wishes", "categories"
+  add_foreign_key "wishes", "users"
 end
