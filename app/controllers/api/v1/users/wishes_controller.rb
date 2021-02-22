@@ -7,10 +7,15 @@ module Api
         before_action :set_user, only: %i[index create]
         before_action :set_category, only: %i[create]
 
-        # GET /users/:uid/wishes?category_id=
+        # GET /users/:uid/wishes
+        # TODO: Serializer を用いて実装する
         def index
-          user_wishes_by_category = @user.wishes.where(category_id: params[:category_id])
-          render json: user_wishes_by_category, each_serializer: WishSerializer, root: 'data'
+          # { "categoryname": [ wish, wish, ], ... }
+          user_wishes = {}
+          Category.all.each do |category|
+            user_wishes[category.name] = @user.wishes.where(category_id: category.id)
+          end
+          render json: { data: user_wishes }, status: :ok
         end
 
         # POST /users/:uid/wishes
