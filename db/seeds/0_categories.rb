@@ -1,11 +1,23 @@
 params = [
   {
     id: 1,
-    name: '場所'
+    name: 'place'
   },
   {
     id: 2,
-    name: '服'
+    name: 'fashion'
+  },
+  {
+    id: 3,
+    name: 'food'
+  },
+  {
+    id: 4,
+    name: 'machine'
+  },
+  {
+    id: 5,
+    name: 'music'
   }
 ]
 
