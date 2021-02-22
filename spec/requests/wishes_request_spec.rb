@@ -7,17 +7,18 @@ RSpec.describe 'Wishes', type: :request do
 
   let(:user) { create(:user) }
   let(:category) { create(:category) }
+  let(:other_category) { create(:category) }
 
   # 取得する 2つの wish
   let!(:first_wish) { create(:wish, user: user, category: category) }
   let!(:second_wish) { create(:wish, user: user, category: category) }
   # 異なるカテゴリーの wish
-  let!(:other_category_wish) { create(:wish, user: user, category: create(:category)) }
+  let!(:other_category_wish) { create(:wish, user: user, category: other_category) }
   # 異なるユーザの wish
   let!(:other_user_wish) { create(:wish, user: create(:user), category: category) }
 
-  describe 'GET /users/:uid/wishes?category_id=?' do
-    let(:request) { get "/api/v1/users/#{user.uid}/wishes?category_id=#{category.id}" }
+  describe 'GET /users/:uid/wishes' do
+    let(:request) { get "/api/v1/users/#{user.uid}/wishes" }
 
     context 'SUCCESS: #index users wishes' do
       it_behaves_like 'API returns json'
@@ -25,40 +26,25 @@ RSpec.describe 'Wishes', type: :request do
 
       it 'returns: users wishes' do
         request
-        expect(json['data']).to match(
-          [
-            {
-              'id' => first_wish.id,
-              'user_id' => user.id,
-              'category_id' => category.id,
-              'name' => first_wish.name,
-              'star' => first_wish.star,
-              'status' => first_wish.status,
-              'deleted' => first_wish.deleted
-            },
-            {
-              'id' => second_wish.id,
-              'user_id' => user.id,
-              'category_id' => category.id,
-              'name' => second_wish.name,
-              'star' => second_wish.star,
-              'status' => second_wish.status,
-              'deleted' => second_wish.deleted
-            }
-          ]
+        # created_at の確認があるため　最初の 2つだけ確認する
+        expect(json['data'][category.name][0]).to include(
+          'id' => first_wish.id,
+          'user_id' => user.id,
+          'category_id' => category.id,
+          'name' => first_wish.name,
+          'star' => first_wish.star,
+          'status' => first_wish.status,
+          'deleted' => first_wish.deleted
         )
-      end
-    end
-
-    context 'SUCCESS: #index users wishes (no wish)' do
-      let(:unused_category) { create(:category) }
-      let(:request) { get "/api/v1/users/#{user.uid}/wishes?category_id=#{unused_category.id}" }
-
-      it_behaves_like 'API returns json'
-      it_behaves_like 'response status code: OK'
-      it 'returns: no wishes' do
-        request
-        expect(json['data'].size).to eq 0
+        expect(json['data'][other_category.name][0]).to include(
+          'id' => other_category_wish.id,
+          'user_id' => user.id,
+          'category_id' => other_category.id,
+          'name' => other_category_wish.name,
+          'star' => other_category_wish.star,
+          'status' => other_category_wish.status,
+          'deleted' => other_category_wish.deleted
+        )
       end
     end
 
