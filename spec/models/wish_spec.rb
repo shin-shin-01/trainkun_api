@@ -22,4 +22,17 @@ RSpec.describe Wish, type: :model do
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to define_enum_for(:status).with_values(%i[wish bougth]) }
   end
+
+  describe 'default_scope: order(star: :desc)' do
+    let!(:wish_1) { create(:wish, star: 1) }
+    let!(:wish_2) { create(:wish, star: 2) }
+    let!(:wish_3) { create(:wish, star: 3) }
+
+    it 'order(star: :desc)' do
+      wishes = Wish.all
+      expect(wishes[0].id).to eq wish_3.id
+      expect(wishes[1].id).to eq wish_2.id
+      expect(wishes[2].id).to eq wish_1.id
+    end
+  end
 end
