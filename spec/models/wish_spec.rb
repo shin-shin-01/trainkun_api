@@ -35,4 +35,15 @@ RSpec.describe Wish, type: :model do
       expect(wishes[2].id).to eq wish_1.id
     end
   end
+
+  describe 'default_scope: where(deleted: false)' do
+    let!(:deleted_wish) { create(:wish, deleted: true) }
+    let!(:not_deleted_wish) { create(:wish, deleted: false) }
+
+    it 'where(deleted: false)' do
+      wishes = Wish.all
+      expect(wishes.size).to eq 1
+      expect(wishes[0].id).to eq not_deleted_wish.id
+    end
+  end
 end

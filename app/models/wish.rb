@@ -16,6 +16,6 @@ class Wish < ApplicationRecord
   validates :status, presence: true
 
   validates :deleted, inclusion: { in: [true, false] }
-  # TODO: test
-  default_scope { order(star: :desc) }
+
+  default_scope { order(star: :desc).where(deleted: false) }
 end
