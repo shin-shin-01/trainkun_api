@@ -50,7 +50,7 @@ RSpec.describe 'Wishes', type: :request do
 
     context 'Errors: user Not Found' do
       let(:fake_uid) { Faker::Alphanumeric.alpha(number: 10) }
-      let(:request) { get "/api/v1/users/#{fake_uid}/wishes?category_id=#{category.id}" }
+      let(:request) { get "/api/v1/users/#{fake_uid}/wishes" }
 
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: NOT FOUND'
@@ -121,6 +121,63 @@ RSpec.describe 'Wishes', type: :request do
 
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: NOT FOUND'
+    end
+  end
+
+  describe 'PUT /users/:uid/wishes/:id' do
+    let(:request) { put "/api/v1/users/#{user.uid}/wishes/#{first_wish.id}", headers: headers, as: :json, params: wish_params }
+
+    context 'SUCCESS: #update all params' do
+      let(:new_name) { Faker::Alphanumeric.alpha(number: 10) }
+      let(:new_category) { create(:category) }
+      let(:new_star) { Faker::Number.within(range: 1..5) }
+      let(:new_status) { :bougth }
+      let(:new_deleted) { true }
+
+      let(:wish_params) do
+        {
+          wish: {
+            name: new_name,
+            category_id: new_category.id,
+            star: new_star,
+            status: new_status,
+            deleted: new_deleted
+          }
+        }
+      end
+
+      it_behaves_like 'API returns json'
+      it_behaves_like 'response status code: OK'
+
+      it 'returns: updated users wishes' do
+        request
+        expect(json['data']).to match(
+          {
+            'id' => first_wish.id,
+            'user_id' => user.id,
+            'category_id' => new_category.id,
+            'name' => new_name,
+            'star' => new_star,
+            'status' => String(new_status),
+            'deleted' => new_deleted
+          }
+        )
+      end
+    end
+
+    context 'ERROR: #update wrong params' do
+      let(:new_star) { nil }
+
+      let(:wish_params) do
+        {
+          wish: {
+            star: new_star
+          }
+        }
+      end
+
+      it_behaves_like 'API returns json'
+      it_behaves_like 'response status code: BAD REQUEST'
     end
   end
 end
