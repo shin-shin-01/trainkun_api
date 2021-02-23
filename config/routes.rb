@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       # User
       resources :users, param: :uid, only: [:create], controller: 'users' do
         member do #users/:uid
-          resources :wishes, only: [:index, :create], controller: 'users/wishes'
+          resources :wishes, only: [:index, :create, :update], controller: 'users/wishes'
         end
       end
       # Category

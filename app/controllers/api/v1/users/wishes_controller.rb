@@ -6,6 +6,7 @@ module Api
       class WishesController < ApplicationController
         before_action :set_user, only: %i[index create]
         before_action :set_category, only: %i[create]
+        before_action :set_wish, only: %i[update]
 
         # GET /users/:uid/wishes
         # TODO: Serializer を用いて実装する
@@ -29,6 +30,15 @@ module Api
           end
         end
 
+        # PUT /users/:uid/wishes/:id
+        def update
+          if @wish.update(update_params)
+            render json: { data: WishSerializer.new(@wish) }, status: :ok
+          else
+            render json: { error: "failed to update wish's property", data: @wish.errors }, status: :bad_request
+          end
+        end
+
         private
 
         def set_user
@@ -41,12 +51,21 @@ module Api
           render json: { error: 'category not found' }, status: :not_found unless @category
         end
 
+        def set_wish
+          @wish = Wish.find_by(id: params[:id])
+          render json: { error: 'wish not found' }, status: :not_found unless @wish
+        end
+
         def wish_params
           params.require(:wish).permit(:name, :star)
         end
 
         def category_params
           params.require(:wish).permit(:category_id)
+        end
+
+        def update_params
+          params.require(:wish).permit(:name, :star, :deleted, :status, :category_id)
         end
       end
     end
