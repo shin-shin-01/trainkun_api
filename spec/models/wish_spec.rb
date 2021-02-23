@@ -24,15 +24,15 @@ RSpec.describe Wish, type: :model do
   end
 
   describe 'default_scope: order(star: :desc)' do
-    let!(:wish_1) { create(:wish, star: 1) }
-    let!(:wish_2) { create(:wish, star: 2) }
-    let!(:wish_3) { create(:wish, star: 3) }
+    let!(:wish_one) { create(:wish, star: 1) }
+    let!(:wish_two) { create(:wish, star: 2) }
+    let!(:wish_three) { create(:wish, star: 3) }
 
     it 'order(star: :desc)' do
       wishes = Wish.all
-      expect(wishes[0].id).to eq wish_3.id
-      expect(wishes[1].id).to eq wish_2.id
-      expect(wishes[2].id).to eq wish_1.id
+      expect(wishes[0].id).to eq wish_three.id
+      expect(wishes[1].id).to eq wish_two.id
+      expect(wishes[2].id).to eq wish_one.id
     end
   end
 
