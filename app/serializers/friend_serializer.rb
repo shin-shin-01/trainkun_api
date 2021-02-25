@@ -3,10 +3,10 @@
 class FriendSerializer < ActiveModel::Serializer
   attribute :id
   attribute :name do
-    object.user.name
+    object.friend_user.name
   end
 
   attribute :picture_url do
-    object.user.picture_url
+    object.friend_user.picture_url
   end
 end
