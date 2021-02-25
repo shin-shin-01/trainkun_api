@@ -10,31 +10,29 @@ RSpec.describe 'Friends', type: :request do
   describe 'GET /users/:uid/friends' do
     let(:request) { get "/api/v1/users/#{user.uid}/friends" }
 
-    let(:first_friend_user) { create(:user)}
-    let!(:first_friend) { create(:friend, user:user, friend_user: first_friend_user) }
+    let(:first_friend_user) { create(:user) }
+    let!(:first_friend) { create(:friend, user: user, friend_user: first_friend_user) }
 
-    let(:second_friend_user) { create(:user)}
-    let!(:second_friend) { create(:friend, user:user, friend_user: second_friend_user) }
+    let(:second_friend_user) { create(:user) }
+    let!(:second_friend) { create(:friend, user: user, friend_user: second_friend_user) }
 
     context 'SUCCESS: #index users friends' do
-
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: OK'
 
       it 'returns: users friends' do
         request
         expect(json['data']).to match([
-          {
-          'id' => first_friend.id,
-          'name' => first_friend_user.name,
-          'picture_url' => first_friend_user.picture_url,
-      },{
-        'id' => second_friend.id,
-        'name' => second_friend_user.name,
-        'picture_url' => second_friend_user.picture_url,
-    }
-      ])
-
+                                        {
+                                          'id' => first_friend.id,
+                                          'name' => first_friend_user.name,
+                                          'picture_url' => first_friend_user.picture_url
+                                        }, {
+                                          'id' => second_friend.id,
+                                          'name' => second_friend_user.name,
+                                          'picture_url' => second_friend_user.picture_url
+                                        }
+                                      ])
       end
     end
 
@@ -92,7 +90,7 @@ RSpec.describe 'Friends', type: :request do
         expect(json).to match(
           {
             "error" => "Failed to create new Friend",
-            "data" => { "friend_user_id"=>["already registered"] }
+            "data" => { "friend_user_id" => ["already registered"] }
           }
         )
       end

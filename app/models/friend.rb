@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Friend < ApplicationRecord
-  belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
-  belongs_to :friend_user, :class_name => 'User', :foreign_key => 'friend_user_id'
+  belongs_to :user, class_name: 'User'
+  belongs_to :friend_user, class_name: 'User'
 
   validates :friend_user_id,
             uniqueness: {
