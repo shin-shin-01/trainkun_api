@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # User
+      resources :users, param: :id, only: [:show], controller: 'users'
       resources :users, param: :uid, only: [:create], controller: 'users' do
         member do #users/:uid
           resources :wishes, only: [:index, :create, :update], controller: 'users/wishes'
