@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UsersController < ApplicationController 
+    class UsersController < ApplicationController
       serialization_scope :action_name
 
       # POST /users
