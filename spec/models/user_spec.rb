@@ -19,4 +19,12 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:uid).is_at_most(255) }
     it { is_expected.to validate_uniqueness_of(:uid) }
   end
+
+  describe 'validation: account_id' do
+    subject { create(:user) }
+
+    it { is_expected.to validate_presence_of(:account_id) }
+    it { is_expected.to validate_length_of(:account_id).is_at_most(255) }
+    it { is_expected.to validate_uniqueness_of(:account_id) }
+  end
 end

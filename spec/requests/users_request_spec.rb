@@ -33,6 +33,8 @@ RSpec.describe 'Users', type: :request do
             'uid' => uid
           }
         )
+        # 作成された アカウントID は ５文字
+        expect(json['user']['account_id'].size).to eq 5
       end
     end
 
@@ -53,6 +55,8 @@ RSpec.describe 'Users', type: :request do
             'uid' => user.uid
           }
         )
+        # 作成された アカウントID は ５文字
+        expect(json['user']['account_id'].size).to eq 5
       end
     end
 

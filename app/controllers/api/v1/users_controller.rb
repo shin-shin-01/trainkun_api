@@ -6,7 +6,7 @@ module Api
       # POST /users
       # return Userinfo
       def create
-        new_user = User.new(user_params)
+        new_user = User.new(user_params.merge({ account_id: SecureRandom.alphanumeric(5) }))
         user = User.find_by(uid: user_params[:uid])
 
         if new_user.save
