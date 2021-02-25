@@ -5,4 +5,5 @@ class UserSerializer < ActiveModel::Serializer
   attribute :name
   attribute :uid
   attribute :account_id
+  attribute :picture_url
 end

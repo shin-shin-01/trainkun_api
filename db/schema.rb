@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_122210) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "account_id", default: "None", null: false
+    t.string "picture_url"
     t.index ["account_id"], name: "index_users_on_account_id", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end

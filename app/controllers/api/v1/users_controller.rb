@@ -21,7 +21,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:name, :uid)
+        params.require(:user).permit(:name, :uid, :picture_url)
       end
     end
   end
