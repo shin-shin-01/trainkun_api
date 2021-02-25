@@ -79,11 +79,11 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /users/:id' do
+  describe 'GET /users/:account_id' do
 
     context 'SUCCESS' do
       let(:user) {create(:user)}
-      let(:request) { get "/api/v1/users/#{user.id}" }
+      let(:request) { get "/api/v1/users/#{user.account_id}" }
 
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: OK'
@@ -99,8 +99,8 @@ RSpec.describe 'Users', type: :request do
     end
 
     context 'ERROR: user not found' do
-      let(:user_id) {Faker::Alphanumeric.alpha(number: 10) }
-      let(:request) { get "/api/v1/users/#{user_id}" }
+      let(:account_id) {Faker::Alphanumeric.alpha(number: 5) }
+      let(:request) { get "/api/v1/users/#{account_id}" }
 
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: NOT FOUND'

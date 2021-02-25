@@ -20,9 +20,9 @@ module Api
         end
       end
 
-      # GET /users/:id
+      # GET /users/:account_id
       def show
-        user = User.find_by(id: params[:id])
+        user = User.find_by(account_id: params[:account_id])
         if user
           render json: user, serializer: UserSerializer, root: 'data', status: :ok
         else
