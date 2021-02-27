@@ -11,12 +11,14 @@ RSpec.describe 'Users', type: :request do
     let(:user_params) do
       {
         name: name,
-        uid: uid
+        uid: uid,
+        picture_url: picture_url
       }
     end
 
     let(:name) { Faker::Alphanumeric.alpha(number: 10) }
     let(:uid) { Faker::Alphanumeric.alpha(number: 10) }
+    let(:picture_url) { Faker::Alphanumeric.alpha(number: 10) }
 
     context 'SUCCESS: createUser' do
       it_behaves_like 'API returns json'
@@ -30,14 +32,17 @@ RSpec.describe 'Users', type: :request do
         expect(json['user']).to include(
           {
             'name' => name,
-            'uid' => uid
+            'uid' => uid,
+            'picture_url' => picture_url
           }
         )
+        # 作成された アカウントID は ５文字
+        expect(json['user']['account_id'].size).to eq 5
       end
     end
 
     context 'SUCCESS: already created user' do
-      let!(:user) { create(:user, name: name, uid: uid) }
+      let!(:user) { create(:user, name: name, uid: uid, picture_url: picture_url) }
 
       it_behaves_like 'API returns json'
       it_behaves_like 'response status code: OK'
@@ -50,9 +55,12 @@ RSpec.describe 'Users', type: :request do
         expect(json['user']).to include(
           {
             'name' => user.name,
-            'uid' => user.uid
+            'uid' => user.uid,
+            'picture_url' => picture_url
           }
         )
+        # 作成された アカウントID は ５文字
+        expect(json['user']['account_id'].size).to eq 5
       end
     end
 
