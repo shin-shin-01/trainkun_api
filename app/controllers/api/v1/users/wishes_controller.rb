@@ -9,12 +9,15 @@ module Api
         before_action :set_wish, only: %i[update]
 
         # GET /users/:uid/wishes
-        # TODO: Serializer を用いて実装する
         def index
           # { "categoryname": [ wish, wish, ], ... }
           user_wishes = {}
           Category.all.each do |category|
-            user_wishes[category.name] = @user.wishes.where(category_id: category.id)
+            user_wishes[category.name] = (ActiveModelSerializers::SerializableResource.new(
+              @user.wishes.where(category_id: category.id),
+              each_serializer: WishSerializer,
+              root: category.name
+            ).serializable_hash)[:"#{category.name}"]
           end
           render json: { data: user_wishes }, status: :ok
         end

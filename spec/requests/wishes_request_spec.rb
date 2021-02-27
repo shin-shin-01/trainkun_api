@@ -26,24 +26,46 @@ RSpec.describe 'Wishes', type: :request do
 
       it 'returns: users wishes' do
         request
-        # created_at の確認があるため　最初の 2つだけ確認する
-        expect(json['data'][category.name][0]).to include(
-          'id' => first_wish.id,
-          'user_id' => user.id,
-          'category_id' => category.id,
-          'name' => first_wish.name,
-          'star' => first_wish.star,
-          'status' => first_wish.status,
-          'deleted' => first_wish.deleted
-        )
-        expect(json['data'][other_category.name][0]).to include(
-          'id' => other_category_wish.id,
-          'user_id' => user.id,
-          'category_id' => other_category.id,
-          'name' => other_category_wish.name,
-          'star' => other_category_wish.star,
-          'status' => other_category_wish.status,
-          'deleted' => other_category_wish.deleted
+        expect(json['data']).to match(
+          {
+            category.name => [
+              {
+                'id' => first_wish.id,
+                'user_id' => user.id,
+                'user_name' => user.name,
+                'category_id' => category.id,
+                'category_name' => category.name,
+                'name' => first_wish.name,
+                'star' => first_wish.star,
+                'status' => first_wish.status,
+                'deleted' => first_wish.deleted
+              },
+              {
+                'id' => second_wish.id,
+                'user_id' => user.id,
+                'user_name' => user.name,
+                'category_id' => category.id,
+                'category_name' => category.name,
+                'name' => second_wish.name,
+                'star' => second_wish.star,
+                'status' => second_wish.status,
+                'deleted' => second_wish.deleted
+              }
+            ],
+            other_category.name => [
+              {
+                'id' => other_category_wish.id,
+                'user_id' => user.id,
+                'user_name' => user.name,
+                'category_id' => other_category.id,
+                'category_name' => other_category.name,
+                'name' => other_category_wish.name,
+                'star' => other_category_wish.star,
+                'status' => other_category_wish.status,
+                'deleted' => other_category_wish.deleted
+              }
+            ]
+          }
         )
       end
     end
@@ -155,7 +177,9 @@ RSpec.describe 'Wishes', type: :request do
           {
             'id' => first_wish.id,
             'user_id' => user.id,
+            'user_name' => user.name,
             'category_id' => new_category.id,
+            'category_name' => new_category.name,
             'name' => new_name,
             'star' => new_star,
             'status' => String(new_status),

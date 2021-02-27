@@ -8,4 +8,11 @@ class WishSerializer < ActiveModel::Serializer
   attribute :star
   attribute :status
   attribute :deleted
+
+  attribute :user_name do
+    object.user.name
+  end
+  attribute :category_name do
+    object.category.name
+  end
 end
