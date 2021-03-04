@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         member do #users/:uid
           resources :wishes, only: [:index, :create, :update], controller: 'users/wishes'
           resources :friends, only: [:index, :create], controller: 'users/friends'
+          resources :friend_wishes, only: [:index], controller: 'users/friend_wishes'
         end
       end
       # Category
