@@ -120,7 +120,7 @@ RSpec.describe 'Wishes', type: :request do
             'star' => star,
             'status' => 'wish',
             'deleted' => false,
-            'image_url' => "https://firebasestorage.googleapis.com/v0/b/wish-image-ae34c.appspot.com/o/default%2FdefaultNoImage.png?alt=media&token=391f1ff8-14a5-4cce-91ac-16ea751b3462"
+            'image_url' => ENV['DEFAULT_IMAGE_URL']
           }
         )
       end
