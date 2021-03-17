@@ -3,6 +3,7 @@
 class Wish < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  has_many :images, dependent: :restrict_with_error
 
   validates :name, length: { maximum: 255 }, presence: true
   validates :star,

@@ -17,6 +17,12 @@ RSpec.describe 'Wishes', type: :request do
   # 異なるユーザの wish
   let!(:other_user_wish) { create(:wish, user: create(:user), category: category) }
 
+  # wish の画像
+  let!(:first_wish_image) { create(:image, wish: first_wish) }
+  let!(:second_wish_image) { create(:image, wish: second_wish) }
+  let!(:other_category_wish_image) { create(:image, wish: other_category_wish) }
+  let!(:other_user_wish_image) { create(:image, wish: other_user_wish) }
+
   describe 'GET /users/:uid/wishes' do
     let(:request) { get "/api/v1/users/#{user.uid}/wishes" }
 
@@ -38,7 +44,8 @@ RSpec.describe 'Wishes', type: :request do
                 'name' => first_wish.name,
                 'star' => first_wish.star,
                 'status' => first_wish.status,
-                'deleted' => first_wish.deleted
+                'deleted' => first_wish.deleted,
+                'image_url' => first_wish_image.url
               },
               {
                 'id' => second_wish.id,
@@ -49,7 +56,8 @@ RSpec.describe 'Wishes', type: :request do
                 'name' => second_wish.name,
                 'star' => second_wish.star,
                 'status' => second_wish.status,
-                'deleted' => second_wish.deleted
+                'deleted' => second_wish.deleted,
+                'image_url' => second_wish_image.url
               }
             ],
             other_category.name => [
@@ -62,7 +70,8 @@ RSpec.describe 'Wishes', type: :request do
                 'name' => other_category_wish.name,
                 'star' => other_category_wish.star,
                 'status' => other_category_wish.status,
-                'deleted' => other_category_wish.deleted
+                'deleted' => other_category_wish.deleted,
+                'image_url' => other_category_wish_image.url
               }
             ]
           }
@@ -110,7 +119,8 @@ RSpec.describe 'Wishes', type: :request do
             'name' => name,
             'star' => star,
             'status' => 'wish',
-            'deleted' => false
+            'deleted' => false,
+            'image_url' => ENV['DEFAULT_IMAGE_URL']
           }
         )
       end
@@ -183,7 +193,8 @@ RSpec.describe 'Wishes', type: :request do
             'name' => new_name,
             'star' => new_star,
             'status' => String(new_status),
-            'deleted' => new_deleted
+            'deleted' => new_deleted,
+            'image_url' => first_wish_image.url
           }
         )
       end

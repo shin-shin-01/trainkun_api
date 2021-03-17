@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_160018) do
+ActiveRecord::Schema.define(version: 2021_03_17_160018) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 2021_02_25_160018) do
     t.index ["friend_user_id"], name: "index_friends_on_friend_user_id"
     t.index ["user_id", "friend_user_id"], name: "index_friends_on_user_id_and_friend_user_id", unique: true
     t.index ["user_id"], name: "index_friends_on_user_id"
+  end
+
+  create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "wish_id", null: false
+    t.string "url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wish_id"], name: "index_images_on_wish_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -55,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_160018) do
 
   add_foreign_key "friends", "Users", column: "friend_user_id"
   add_foreign_key "friends", "Users", column: "user_id"
+  add_foreign_key "images", "wishes"
   add_foreign_key "wishes", "categories"
   add_foreign_key "wishes", "users"
 end

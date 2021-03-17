@@ -19,6 +19,12 @@ RSpec.describe 'FriendWishes', type: :request do
   let(:first_friend_user) { create(:user) }
   let(:second_friend_user) { create(:user) }
 
+  # wish の画像
+  let!(:first_wish_image) { create(:image, wish: first_wish) }
+  let!(:second_wish_image) { create(:image, wish: second_wish) }
+  let!(:second_category_wish_image) { create(:image, wish: second_category_wish) }
+  let!(:user_wish_image) { create(:image, wish: user_wish) }
+
   describe 'GET /users/:uid/friend_wishes' do
     let(:request) { get "/api/v1/users/#{user.uid}/friend_wishes" }
 
@@ -46,7 +52,8 @@ RSpec.describe 'FriendWishes', type: :request do
                 'name' => first_wish.name,
                 'star' => first_wish.star,
                 'status' => first_wish.status,
-                'deleted' => first_wish.deleted
+                'deleted' => first_wish.deleted,
+                'image_url' => first_wish_image.url
               },
               {
                 'id' => second_wish.id,
@@ -58,7 +65,8 @@ RSpec.describe 'FriendWishes', type: :request do
                 'name' => second_wish.name,
                 'star' => second_wish.star,
                 'status' => second_wish.status,
-                'deleted' => second_wish.deleted
+                'deleted' => second_wish.deleted,
+                'image_url' => second_wish_image.url
               }
             ],
             second_category.name => [
@@ -72,7 +80,8 @@ RSpec.describe 'FriendWishes', type: :request do
                 'name' => second_category_wish.name,
                 'star' => second_category_wish.star,
                 'status' => second_category_wish.status,
-                'deleted' => second_category_wish.deleted
+                'deleted' => second_category_wish.deleted,
+                'image_url' => second_category_wish_image.url
               }
             ]
           }

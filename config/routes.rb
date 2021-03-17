@@ -11,6 +11,7 @@ Rails.application.routes.draw do
           resources :wishes, only: [:index, :create, :update], controller: 'users/wishes'
           resources :friends, only: [:index, :create], controller: 'users/friends'
           resources :friend_wishes, only: [:index], controller: 'users/friend_wishes'
+          resources :images, only: [:create], controller: 'users/images'
         end
       end
       # Category
